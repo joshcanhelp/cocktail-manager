@@ -1,0 +1,19 @@
+{
+  "name": "cocktail-manager",
+  "version": "0.0.1",
+  "description": "A cocktail management app built with various JS technology",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshcanhelp/cocktail-manager"
+  },
+  "author": "Josh Cunningham (josh@joshcanhelp.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshcanhelp/cocktail-manager/issues"
+  },
+  "homepage": "https://github.com/joshcanhelp/cocktail-manager"
+}

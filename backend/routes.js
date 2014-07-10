@@ -5,9 +5,25 @@ module.exports = function (app) {
 
 	// Homepage
 	app.get('/', function (req, res) {
-		return res.render('../dist/index.jade', {
-			pageTitle: 'Home Page!'
+		return res.render('index', {
+			pageTitle: 'Home Page!',
+			cocktails: [
+				{
+					id: 1,
+					name: 'Perfect Margarita',
+					tags: ['margarita', 'summer', 'lime']
+				},
+				{
+					id: 2,
+					name: 'Classic Manhattan',
+					tags: ['vintage', 'whisky', 'fall']
+				}
+			]
 		});
 	});
 
+	// Add cocktail
+	app.post('/', function (req, res) {
+		return res.json(req.body);
+	});
 };

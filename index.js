@@ -1,12 +1,13 @@
 /* globals module, app, process, require, console */
 
 var express = require('express');
+var bodyParser = require('body-parser');
 
 // Initialize & configure express app
 var app = express();
 
-// Configure the server
-require('./config/config.js')(app, express);
+// Configure Express
+require('./config/config.js')(app);
 
 // Mongoose and MongoDB
 require('./config/db.js');

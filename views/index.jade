@@ -16,30 +16,26 @@ html(lang="en")
           li
             a(href="#add-cocktails", data-toggle="pill") Add
         .tab-content
-          div(class="tab-pane", id="view-cocktails")
+          div(class="tab-pane active", id="view-cocktails")
             h2 View cocktails
             table(class="table table-striped")
               thead
                 tr
                   th ID
                   th Name
-                  th Category
                   th Tags
               tbody
-                tr
-                  td 1
-                  td Perfect Margarita
-                  td margarita
-                  td tequila
-                tr
-                  td 2
-                  td Perfect Manhattan
-                  td manhattan
-                  td whisky, vermouth
-          div(class="tab-pane active", id="add-cocktails")
-            h2 Add cocktails
-            br
-            form(class="form-horizontal")
+                for cocktail in cocktails
+                  tr
+                    td= cocktail.id
+                    td= cocktail.name
+                    td
+                      for tag in cocktail.tags
+                        span= tag + " "
+          div(class="tab-pane", id="add-cocktails")
+            h2 Add cocktail
+            hr
+            form(class="form-horizontal", action="#", method="POST")
               .form-group
                 label(for="cocktailName",  class="col-sm-2 control-label") Name
                 .col-sm-10
@@ -48,32 +44,34 @@ html(lang="en")
                 label(for="cocktailDesc",  class="col-sm-2 control-label") Description
                 .col-sm-10
                   textarea(id="cocktailDesc", name="cocktailDesc", class="form-control", rows="3")
-              .form-group
+              .form-group.ingredient-labels
                 label(class="col-sm-2 control-label") Ingredients
                 .col-sm-2
                   label
                     small Amount
-                  br
-                  input(name="cocktailParts-amt-1", type="text", class="form-control")
                 .col-sm-2
                   label
                     small Unit
-                  br
-                  select(name="cocktailParts-unit-1", class="form-control")
-                    option(val="") Select...
-                    option(val="oz") Ounces
-                    option(val="tbl") Tablespoons
-                    option(val="tsp") Teaspoons
-                    option(val="dash") Dash
                 .col-sm-6
                   label
                     small Ingredient
-                  br
-                  input(name="cocktailParts-name-1", type="text", class="form-control")
-              .form-group
+              .form-group#add-ingredient-control
                 .col-sm-12
                   p(class="text-right")
                     button(type="button", class="btn btn-default" id="add-ingredient") Add Ingredient
+              .form-group#add-step-control
+                .col-sm-12
+                  p(class="text-right")
+                    button(type="button", class="btn btn-default" id="add-step") Add Step
+              .form-group
+                label(for="cocktailTags",  class="col-sm-2 control-label") Tags
+                .col-sm-10
+                  textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")
+              hr
+              .form-group
+                .col-sm-12
+                  p(class="text-right")
+                    input(type="submit", class="btn btn-primary" id="add-step", value="Save Cocktail")
 
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
     script(src="bootstrap.min.js")

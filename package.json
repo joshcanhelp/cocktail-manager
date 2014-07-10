@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/joshcanhelp/cocktail-manager/issues"
   },
-  "homepage": "https://github.com/joshcanhelp/cocktail-manager"
+  "homepage": "https://github.com/joshcanhelp/cocktail-manager",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.5.1",
+    "mongoose": "^3.8.12"
+  }
 }

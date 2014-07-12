@@ -18,24 +18,26 @@ html(lang="en")
         .tab-content
           div(class="tab-pane active", id="view-cocktails")
             h2 View cocktails
-            table(class="table table-striped")
-              thead
-                tr
-                  th ID
-                  th Name
-                  th Tags
-              tbody
-                for cocktail in cocktails
+            if cocktails
+              table(class="table table-striped")
+                thead
                   tr
-                    td= cocktail.id
-                    td= cocktail.name
-                    td
-                      for tag in cocktail.tags
-                        span= tag + " "
+                    th ID
+                    th Name
+                    th Description
+                tbody
+                  for cocktail in cocktails
+                    tr
+                      td= cocktail._id
+                      td= cocktail.name
+                      td= cocktail.description
+            else
+              p
+                em No cocktails to show ...
           div(class="tab-pane", id="add-cocktails")
             h2 Add cocktail
             hr
-            form(class="form-horizontal", action="#", method="POST")
+            form(class="form-horizontal", method="POST")
               .form-group
                 label(for="cocktailName",  class="col-sm-2 control-label") Name
                 .col-sm-10

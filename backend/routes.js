@@ -1,29 +1,13 @@
 /* globals module, app, process, require, console, express */
 
+var cocktails = require('./cocktails');
+
 module.exports = function (app) {
 	"use strict";
 
 	// Homepage
-	app.get('/', function (req, res) {
-		return res.render('index', {
-			pageTitle: 'Home Page!',
-			cocktails: [
-				{
-					id: 1,
-					name: 'Perfect Margarita',
-					tags: ['margarita', 'summer', 'lime']
-				},
-				{
-					id: 2,
-					name: 'Classic Manhattan',
-					tags: ['vintage', 'whisky', 'fall']
-				}
-			]
-		});
-	});
+	app.get('/', cocktails.get);
 
 	// Add cocktail
-	app.post('/', function (req, res) {
-		return res.json(req.body);
-	});
+	app.post('/', cocktails.add);
 };

@@ -1,0 +1,49 @@
+body {
+	background: #fdfdfd;
+}
+
+.container {
+	max-width: 850px;
+}
+
+#view-nav {
+	font-size: 1em;
+	font-weight: bold;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+}
+
+.form-horizontal .control-label {
+	padding-top: 0;
+}
+
+.ingredient-labels {
+	margin-bottom: 0;
+}
+
+.page-header h1,
+.page-header h2 {
+	font-family: 'Vast Shadow';
+	font-weight: 400;
+}
+
+.page-header h1 {
+	font-size: 5em;
+	text-align: center;
+}
+
+.page-header h2 {
+	font-size: 3em;
+}
+
+.table>tbody>tr>td {
+	padding: 12px;
+}
+
+.glyphicon-pencil {
+	color: #444
+}
+
+.glyphicon-remove {
+	color: red
+}

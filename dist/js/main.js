@@ -4,6 +4,21 @@ jQuery(document).ready(function ($) {
 	"use strict";
 
 	/*
+	Tabbed nav
+	*/
+
+	$('#view-nav a').click(function (e) {
+		$(this).tab('show');
+	});
+
+	var hash = window.location.hash;
+	if (hash) {
+		$('#view-nav a[href="' + hash + '"]').tab('show');
+	} else{
+		$('#view-nav a[href="#view-all"]').tab('show');
+	}
+
+	/*
 	Ingredient fields
 	*/
 

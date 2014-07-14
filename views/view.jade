@@ -1,0 +1,47 @@
+extends index
+
+block content
+
+  ul(class="nav nav-pills", id="view-nav")
+    li
+      a(href="/#view-all") &laquo; Home
+
+  .page-header
+    h2= cocktail.name
+
+  div.form-horizontal
+    .form-group
+      label.col-sm-2.control-label Description
+      .col-sm-10
+        p= cocktail.description
+    .form-group.ingredient-labels
+      label(class="col-sm-2 control-label") Ingredients
+      .col-sm-2
+        label
+          small Amount
+      .col-sm-2
+        label
+          small Unit
+      .col-sm-6
+        label
+          small Ingredient
+    if cocktail.ingredients
+      for ingredient in cocktail.ingredients
+        .form-group.ingredient-labels
+          .col-sm-2
+            p &nbsp;
+          .col-sm-2
+            p= ingredient.amount
+          .col-sm-2
+            p= ingredient.unit
+          .col-sm-6
+            p= ingredient.name
+
+    .form-group#add-step-control
+      .col-sm-12
+        p(class="text-right")
+          button(type="button", class="btn btn-default" id="add-step") Add Step
+    .form-group
+      label(for="cocktailTags",  class="col-sm-2 control-label") Tags
+      .col-sm-10
+        textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")

@@ -10,5 +10,6 @@ module.exports = mongoose.model('Cocktail', mongoose.Schema({
 		unit: String,
 		name: String
 	}],
-	steps: []
+	steps: [],
+	tags: Object
 }));

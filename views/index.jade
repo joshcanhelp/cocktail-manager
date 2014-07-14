@@ -2,79 +2,19 @@ doctype html
 html(lang="en")
   head
     title= pageTitle
-    link(rel="stylesheet", href="bootstrap.min.css")
-    link(rel="stylesheet", href="bootstrap-theme.min.css")
-    link(rel="stylesheet", href="style.css")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/bootstrap-theme.min.css")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Vast+Shadow")
+
   body(role="document")
     .container
       .page-header
-        h1 Jade - Cocktail Manager
+        h1 Cocktails
       .container
-        ul(class="nav nav-pills", id="view-nav")
-          li(class="active")
-            a(href="#view-cocktails", data-toggle="pill") View
-          li
-            a(href="#add-cocktails", data-toggle="pill") Add
-        .tab-content
-          div(class="tab-pane active", id="view-cocktails")
-            h2 View cocktails
-            if cocktails
-              table(class="table table-striped")
-                thead
-                  tr
-                    th ID
-                    th Name
-                    th Description
-                tbody
-                  for cocktail in cocktails
-                    tr
-                      td= cocktail._id
-                      td= cocktail.name
-                      td= cocktail.description
-            else
-              p
-                em No cocktails to show ...
-          div(class="tab-pane", id="add-cocktails")
-            h2 Add cocktail
-            hr
-            form(class="form-horizontal", method="POST")
-              .form-group
-                label(for="cocktailName",  class="col-sm-2 control-label") Name
-                .col-sm-10
-                  input(id="cocktailName", name="cocktailName", type="text", class="form-control")
-              .form-group
-                label(for="cocktailDesc",  class="col-sm-2 control-label") Description
-                .col-sm-10
-                  textarea(id="cocktailDesc", name="cocktailDesc", class="form-control", rows="3")
-              .form-group.ingredient-labels
-                label(class="col-sm-2 control-label") Ingredients
-                .col-sm-2
-                  label
-                    small Amount
-                .col-sm-2
-                  label
-                    small Unit
-                .col-sm-6
-                  label
-                    small Ingredient
-              .form-group#add-ingredient-control
-                .col-sm-12
-                  p(class="text-right")
-                    button(type="button", class="btn btn-default" id="add-ingredient") Add Ingredient
-              .form-group#add-step-control
-                .col-sm-12
-                  p(class="text-right")
-                    button(type="button", class="btn btn-default" id="add-step") Add Step
-              .form-group
-                label(for="cocktailTags",  class="col-sm-2 control-label") Tags
-                .col-sm-10
-                  textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")
-              hr
-              .form-group
-                .col-sm-12
-                  p(class="text-right")
-                    input(type="submit", class="btn btn-primary" id="add-step", value="Save Cocktail")
+
+      block content
 
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
-    script(src="bootstrap.min.js")
-    script(src="main.js")
+    script(src="/js/bootstrap.min.js")
+    script(src="/js/main.js")

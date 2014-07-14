@@ -40,6 +40,11 @@ body {
 	padding: 12px;
 }
 
+.glyphicon {
+	margin-right: 10px
+}
+
+
 .glyphicon-pencil {
 	color: #444
 }

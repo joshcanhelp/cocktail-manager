@@ -48,3 +48,4 @@ This is my attempt to use what I learned to solve a very unimportant problem I w
 - Backbone
 - Angular
 - Ember
+- Heroku instructions and hooks for easy deployment

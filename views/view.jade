@@ -14,8 +14,16 @@ block content
       label.col-sm-2.control-label Description
       .col-sm-10
         p= cocktail.description
+    if cocktail.tags
+      .form-group
+        label.col-sm-2.control-label Tags
+        .col-sm-10
+          p
+            for tag in cocktail.tags
+              span= tag.name
+                &nbsp;
     .form-group.ingredient-labels
-      label(class="col-sm-2 control-label") Ingredients
+      label.col-sm-2.control-label Ingredients
       .col-sm-2
         label
           small Amount
@@ -36,12 +44,13 @@ block content
             p= ingredient.unit
           .col-sm-6
             p= ingredient.name
-
-    .form-group#add-step-control
-      .col-sm-12
-        p(class="text-right")
-          button(type="button", class="btn btn-default" id="add-step") Add Step
-    .form-group
-      label(for="cocktailTags",  class="col-sm-2 control-label") Tags
-      .col-sm-10
-        textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")
+    br
+    br
+    if cocktail.steps
+      - var counter = 0
+      for step in cocktail.steps
+        - counter++
+        .form-group
+          label.col-sm-2.control-label Step #{ counter }
+          .col-sm-10
+            p= step

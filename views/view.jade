@@ -20,8 +20,7 @@ block content
         .col-sm-10
           p
             for tag in cocktail.tags
-              span= tag.name
-                &nbsp;
+              span.tag-name= tag
     .form-group.ingredient-labels
       label.col-sm-2.control-label Ingredients
       .col-sm-2
@@ -44,13 +43,12 @@ block content
             p= ingredient.unit
           .col-sm-6
             p= ingredient.name
-    br
-    br
+    hr
     if cocktail.steps
       - var counter = 0
-      for step in cocktail.steps
-        - counter++
-        .form-group
-          label.col-sm-2.control-label Step #{ counter }
-          .col-sm-10
-            p= step
+      .form-group
+        label.col-sm-2.control-label Steps
+        .col-sm-10
+          ol.cocktail-steps
+            for step in cocktail.steps
+              li= step

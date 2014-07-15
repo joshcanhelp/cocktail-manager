@@ -103,13 +103,22 @@ jQuery(document).ready(function ($) {
 		var tagSlug = thisTag.attr('data-tag-slug');
 		var cocktailTable = $('#cocktail-table');
 
-		// Hide all rows and then show relevant ones
-		cocktailTable.find('tbody tr').hide();
-		cocktailTable.find('tr[data-tag-slugs*=' + tagSlug + ']').show();
+		// Toggle filters
+		if (thisTag.hasClass('active')) {
+			// Show all rows
+			cocktailTable.find('tbody tr').show();
 
-		// Show this filter as active
-		tagFilter.removeClass('active');
-		thisTag.addClass('active');
+			// Turn this filter off
+			thisTag.removeClass('active');
+		} else {
+			// Hide all rows then show filtered ones
+			cocktailTable.find('tbody tr').hide();
+			cocktailTable.find('tr[data-tag-slugs*=' + tagSlug + ']').show();
+
+			// Assign active class to the active filter
+			tagFilter.removeClass('active');
+			thisTag.addClass('active');
+		}
 	});
 
 });

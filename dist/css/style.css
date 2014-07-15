@@ -65,7 +65,14 @@ body {
 	cursor: pointer;
 }
 
-.tag-name:hover,
-.tag-name.active {
+.tag-listing .tag-name.active {
 	background: #ddd
+}
+
+.tag-listing .tag-name:hover {
+	background: #ccc
+}
+
+.cocktail-steps {
+	padding-left: 20px
 }

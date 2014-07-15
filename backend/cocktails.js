@@ -8,6 +8,7 @@ var async = require('async');
 var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
 
+// Get all cocktails for the homepage
 module.exports.get = function (req, res) {
 	"use strict";
 
@@ -34,6 +35,7 @@ module.exports.get = function (req, res) {
 
 	});
 
+	// Get all tags for filtering
 	asyncLoader.push(function (callback) {
 
 		Tag.find({}, {}, {
@@ -51,6 +53,7 @@ module.exports.get = function (req, res) {
 		);
 	});
 
+	// Run the functions as a series, serve the page when complete
 	async.series(asyncLoader, function () {
 		pageVars.pageTitle = 'Cocktail Manager';
 		pageVars.isAdmin = true;

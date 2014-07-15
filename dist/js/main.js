@@ -24,6 +24,9 @@ jQuery(document).ready(function ($) {
 	Ingredient fields
 	*/
 
+	// Number of steps showing
+	var ingredientCount = 0;
+
 	// Create select options from a standard list
 	var unitOptions = '<option val="">Select...</option>';
 	$.each(cmAllUnits(), function (index, el) {
@@ -41,6 +44,7 @@ jQuery(document).ready(function ($) {
 
 	// Set of fields to add an ingredient
 	function renderIngredient() {
+		ingredientCount++;
 		$('#add-ingredient-control').before(
 			'<div class="form-group">' +
 			'<div class="col-sm-2">&nbsp;</div>' +
@@ -64,7 +68,7 @@ jQuery(document).ready(function ($) {
 	*/
 
 	// Number of steps showing
-	var stepCount = 1;
+	var stepCount = 0;
 
 	// Add the first step
 	renderStep();
@@ -72,12 +76,12 @@ jQuery(document).ready(function ($) {
 	// On button click, count the step and add a field
 	$('#add-step').click(function (e) {
 		e.preventDefault();
-		stepCount++;
 		renderStep();
 	});
 
 	// Add another step field
 	function renderStep() {
+		stepCount++;
 		$('#add-step-control').before(
 			'<div class="form-group">' +
 			'<label class="col-sm-2 control-label">Step ' + stepCount + '</label>' +
@@ -91,11 +95,21 @@ jQuery(document).ready(function ($) {
 	Tag listing
 	*/
 
-	$('.tag-listing span.tag-name').click(function (e) {
-		var tagSlug = $(this).attr('data-tag-slug');
+	var tagFilter = $('.tag-listing span.tag-name');
+	tagFilter.click(function (e) {
+
+		// Cache selectors
+		var thisTag = $(this);
+		var tagSlug = thisTag.attr('data-tag-slug');
 		var cocktailTable = $('#cocktail-table');
+
+		// Hide all rows and then show relevant ones
 		cocktailTable.find('tbody tr').hide();
 		cocktailTable.find('tr[data-tag-slugs*=' + tagSlug + ']').show();
+
+		// Show this filter as active
+		tagFilter.removeClass('active');
+		thisTag.addClass('active');
 	});
 
 });

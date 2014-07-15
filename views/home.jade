@@ -2,7 +2,7 @@ extends index
 
 block content
 
-  ul(class="nav nav-pills", id="view-nav")
+  ul#view-nav.nav.nav-pills
     li
       a(href="#view-all") View
     if isAdmin
@@ -15,13 +15,13 @@ block content
     div#view-all.tab-pane
       .page-header
         h2 View all
-      if tags
+      if tags.length
         .tag-listing
           p
             strong Tags:
             for tag in tags
-              span(data-tag-id="#{ tag._id }" class="tag-name", data-tag-slug="#{ tag.slug }")= tag.name
-      if cocktails
+              span.tag-name(data-tag-id="#{ tag._id }" data-tag-slug="#{ tag.slug }")= tag.name
+      if cocktails.length
         table#cocktail-table.table.table-striped
           thead
             tr

@@ -38,7 +38,7 @@ module.exports.get = function (req, res) {
 
 		Tag.find({}, {}, {
 				sort: {
-					name: 1
+					slug: 1
 				}
 			},
 			function (err, result) {
@@ -78,8 +78,6 @@ module.exports.view = function (req, res) {
 
 module.exports.add = function (req, res) {
 	"use strict";
-
-	console.log(req.body);
 
 	var addCocktail = {
 		name       : req.body.cocktailName,

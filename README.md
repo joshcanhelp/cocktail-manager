@@ -12,7 +12,7 @@ Built with:
 - Underscore.js
 - Async.js
 
-**Note:** There is no admin control currently so putting this live could result in a lot of automated spam being generated.
+**Note:** There is no admin control currently so putting this live could result in a lot of automated spam being generated. It's also still very much in development so don't use this in the wild quite yet as the DB schema is likely to change a bit. 
 
 ## Concept
 

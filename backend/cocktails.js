@@ -57,6 +57,7 @@ module.exports.get = function (req, res) {
 	async.series(asyncLoader, function () {
 		pageVars.pageTitle = 'Cocktail Manager';
 		pageVars.isAdmin = true;
+		pageVars.isEdit = false;
 		// console.log(pageVars);
 		return res.render('home', pageVars);
 	});
@@ -141,6 +142,25 @@ module.exports.add = function (req, res) {
 	});
 };
 
+module.exports.edit = function (req, res) {
+	"use strict";
+
+	Cocktail.findOne({_id: req.param('id')}, function (err, result) {
+		if (err) {
+			throw err;
+		}
+		return res.render('edit', {
+			pageTitle: 'Edit ' + result.name,
+			cocktail : result,
+			isAdmin  : true,
+			isEdit: true
+		});
+	});
+
+};
+
+// Formats incoming ingredients for storage.
+// Deals with body-parser using both string and arrays for multiple values.
 function prepareIngredients(body) {
 	"use strict";
 
@@ -168,6 +188,7 @@ function prepareIngredients(body) {
 	return ingredients;
 }
 
+// Create a slug from a name
 function createSlug(text) {
 	"use strict";
 

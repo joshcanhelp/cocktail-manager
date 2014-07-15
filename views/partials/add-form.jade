@@ -1,16 +1,20 @@
-.page-header
-  h2 Add one
 form(class="form-horizontal", method="POST")
   .form-group
-    label(for="cocktailName",  class="col-sm-2 control-label") Name
+    label.col-sm-2.control-label(for="cocktailName") Name
     .col-sm-10
-      input(id="cocktailName", name="cocktailName", type="text", class="form-control")
+      if isEdit
+        input#cocktailName.form-control(name="cocktailName", type="text", value=cocktail.name)
+      else
+        input#cocktailName.form-control(name="cocktailName", type="text")
   .form-group
-    label(for="cocktailDesc",  class="col-sm-2 control-label") Description
+    label.col-sm-2.control-label(for="cocktailDesc") Description
     .col-sm-10
-      textarea(id="cocktailDesc", name="cocktailDesc", class="form-control", rows="3")
+      if isEdit
+        textarea#cocktailDesc.form-control(name="cocktailDesc", rows="3")= cocktail.description
+      else
+        textarea#cocktailDesc.form-control(name="cocktailDesc", rows="3")
   .form-group.ingredient-labels
-    label(class="col-sm-2 control-label") Ingredients
+    label.col-sm-2.control-label Ingredients
     .col-sm-2
       label
         small Amount
@@ -20,20 +24,29 @@ form(class="form-horizontal", method="POST")
     .col-sm-6
       label
         small Ingredient
+  if isEdit && cocktail.ingredients.length
+    p
+      strong Show ingredients
   .form-group#add-ingredient-control
     .col-sm-12
-      p(class="text-right")
-        button(type="button", class="btn btn-default" id="add-ingredient") Add Ingredient
+      p.text-right
+        button#add-ingredient.btn.btn-default(type="button") Add Ingredient
   .form-group#add-step-control
     .col-sm-12
-      p(class="text-right")
-        button(type="button", class="btn btn-default" id="add-step") Add Step
+      p.text-right
+        button#add-step.btn.btn-default(type="button") Add Step
   .form-group
-    label(for="cocktailTags",  class="col-sm-2 control-label") Tags
+    label.col-sm-2.control-label(for="cocktailTags") Tags
     .col-sm-10
-      textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")
+      if isEdit && cocktail.tags.length
+        textarea#cocktailTags.form-control(name="cocktailTags", rows="3")= cocktail.tags.join(', ')
+      else
+        textarea#cocktailTags.form-control(name="cocktailTags", rows="3")
   hr
   .form-group
     .col-sm-12
       p
-        input(type="submit", class="btn btn-primary" id="add-step", value="Save Cocktail")
+        if isEdit
+          a.btn.btn-default(href="/#view-all") Cancel
+          span &nbsp;&nbsp;
+        input.btn.btn-primary(type="submit", value="Save Cocktail")

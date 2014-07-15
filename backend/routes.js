@@ -20,9 +20,7 @@ module.exports = function (app) {
 	app.get('/view/:id', cocktails.view);
 
 	// Edit cocktail
-	app.get('/edit/:id', function (req, res) {
-		return res.send(200, 'Todo');
-	});
+	app.get('/edit/:id', cocktails.edit);
 
 	// Remove cocktail
 	app.get('/remove/:id', function (req, res) {

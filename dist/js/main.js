@@ -121,6 +121,16 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	/*
+	Edit controls
+	*/
+
+	$('#cocktail-table .glyphicon-remove').click(function (e) {
+		if (! window.confirm('Are you sure you want to delete this cocktail? This cannot be undone.')) {
+			e.preventDefault();
+		}
+	});
+
 });
 
 // Standard units used on the drop-down when adding a cocktail

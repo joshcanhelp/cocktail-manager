@@ -1,0 +1,39 @@
+.page-header
+  h2 Add one
+form(class="form-horizontal", method="POST")
+  .form-group
+    label(for="cocktailName",  class="col-sm-2 control-label") Name
+    .col-sm-10
+      input(id="cocktailName", name="cocktailName", type="text", class="form-control")
+  .form-group
+    label(for="cocktailDesc",  class="col-sm-2 control-label") Description
+    .col-sm-10
+      textarea(id="cocktailDesc", name="cocktailDesc", class="form-control", rows="3")
+  .form-group.ingredient-labels
+    label(class="col-sm-2 control-label") Ingredients
+    .col-sm-2
+      label
+        small Amount
+    .col-sm-2
+      label
+        small Unit
+    .col-sm-6
+      label
+        small Ingredient
+  .form-group#add-ingredient-control
+    .col-sm-12
+      p(class="text-right")
+        button(type="button", class="btn btn-default" id="add-ingredient") Add Ingredient
+  .form-group#add-step-control
+    .col-sm-12
+      p(class="text-right")
+        button(type="button", class="btn btn-default" id="add-step") Add Step
+  .form-group
+    label(for="cocktailTags",  class="col-sm-2 control-label") Tags
+    .col-sm-10
+      textarea(id="cocktailTags", name="cocktailTags", class="form-control", rows="3")
+  hr
+  .form-group
+    .col-sm-12
+      p
+        input(type="submit", class="btn btn-primary" id="add-step", value="Save Cocktail")

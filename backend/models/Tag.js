@@ -2,5 +2,6 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Tag', mongoose.Schema({
-	name: String
+	name: String,
+	slug: String
 }));

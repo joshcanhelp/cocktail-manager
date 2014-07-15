@@ -11,5 +11,5 @@ module.exports = mongoose.model('Cocktail', mongoose.Schema({
 		name: String
 	}],
 	steps: [],
-	tags: Object
+	tags: []
 }));

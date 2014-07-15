@@ -1,24 +1,63 @@
 /* globals require, module, console */
 
+// Grab libraries
 var _ = require('underscore');
 var async = require('async');
 
+// Grab Mongoose models
 var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
 
 module.exports.get = function (req, res) {
 	"use strict";
 
-	Cocktail.find({}, function (err, result) {
-		if (err) {
-			throw err;
-		}
-		return res.render('home', {
-			pageTitle: 'Home Page!',
-			cocktails: result,
-			isadmin: true
-		});
+	// Array for async functions
+	var asyncLoader = [];
+
+	// Jade template variables
+	var pageVars = {};
+
+	// Get all cocktails
+	asyncLoader.push( function (callback) {
+
+		Cocktail.find({}, {}, {
+				sort: { date: -1 }
+			},
+			function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				pageVars.cocktails = result;
+				callback(null);
+			}
+		);
+
 	});
+
+	asyncLoader.push(function (callback) {
+
+		Tag.find({}, {}, {
+				sort: {
+					name: 1
+				}
+			},
+			function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				pageVars.tags = result;
+				callback(null);
+			}
+		);
+	});
+
+	async.series(asyncLoader, function () {
+		pageVars.pageTitle = 'Cocktail Manager';
+		pageVars.isAdmin = true;
+		// console.log(pageVars);
+		return res.render('home', pageVars);
+	});
+
 };
 
 module.exports.view = function (req, res) {
@@ -31,7 +70,7 @@ module.exports.view = function (req, res) {
 		return res.render('view', {
 			pageTitle: result.name,
 			cocktail : result,
-			isadmin  : true
+			isAdmin  : true
 		});
 	});
 
@@ -55,30 +94,28 @@ module.exports.add = function (req, res) {
 
 	_.each(req.body.cocktailTags.split(','), function (el, index, list) {
 
-		el = el.toString().trim();
+		var tagName = el.toString().trim();
+		var tagSlug = createSlug(tagName);
 
 		asyncLoader.push(
 			function (callback) {
-				Tag.findOne({name: el}, function (err, tag) {
+				Tag.findOne({slug: tagSlug}, function (err, tag) {
 					if (err) {
 						callback(err);
 					}
 
 					if (tag) {
-						addCocktail.tags.push({
-							id  : tag._id,
-							name: tag.name
-						});
+						addCocktail.tags.push(tagSlug);
 						callback(null);
 					} else {
-						Tag.create({name: el}, function (err, tag) {
+						Tag.create({
+								name: tagName,
+								slug: tagSlug
+							}, function (err, tag) {
 							if (err) {
 								callback(err);
 							}
-							addCocktail.tags.push({
-								id: tag._id,
-								name: tag.name
-							});
+							addCocktail.tags.push(tagSlug);
 							callback(null);
 						});
 					}
@@ -128,4 +165,13 @@ function prepareIngredients(body) {
 	}
 
 	return ingredients;
+}
+
+function createSlug(text) {
+	"use strict";
+
+	return text
+			.toLowerCase()
+			.replace(/[^\w ]+/g, '')
+			.replace(/ +/g, '-');
 }

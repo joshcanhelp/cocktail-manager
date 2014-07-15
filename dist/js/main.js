@@ -7,15 +7,17 @@ jQuery(document).ready(function ($) {
 	Tabbed nav
 	*/
 
-	$('#view-nav a').click(function (e) {
+	var viewNav = $('#view-nav');
+
+	viewNav.find('a').click(function (e) {
 		$(this).tab('show');
 	});
 
 	var hash = window.location.hash;
 	if (hash) {
-		$('#view-nav a[href="' + hash + '"]').tab('show');
+		viewNav.find('a[href="' + hash + '"]').tab('show');
 	} else{
-		$('#view-nav a[href="#view-all"]').tab('show');
+		viewNav.find('a[href="#view-all"]').tab('show');
 	}
 
 	/*
@@ -85,9 +87,20 @@ jQuery(document).ready(function ($) {
 		);
 	}
 
+	/*
+	Tag listing
+	*/
+
+	$('.tag-listing span.tag-name').click(function (e) {
+		var tagSlug = $(this).attr('data-tag-slug');
+		var cocktailTable = $('#cocktail-table');
+		cocktailTable.find('tbody tr').hide();
+		cocktailTable.find('tr[data-tag-slugs*=' + tagSlug + ']').show();
+	});
+
 });
 
-// Standard units used on the dropdown when adding a cocktail
+// Standard units used on the drop-down when adding a cocktail
 function cmAllUnits() {
 	"use strict";
 

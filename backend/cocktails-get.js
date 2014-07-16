@@ -145,6 +145,9 @@ module.exports.edit = function (req, res) {
 				});
 				callback(null);
 			});
+		} else {
+			cocktail.tagNames = [];
+			callback(null);
 		}
 	});
 

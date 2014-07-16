@@ -28,55 +28,58 @@ module.exports.add = function (req, res) {
 		var tagSlug = createSlug(tagName);
 
 		asyncLoader.push( function (callback) {
-					Tag.findOne({slug: tagSlug}, function (err, tag) {
-						if (err) {
-							callback(err);
-						}
 
-						if (tag) {
+			if (tagSlug) {
+				Tag.findOne({slug: tagSlug}, function (err, tag) {
+					if (err) {
+						callback(err);
+					}
+
+					if (tag) {
+						addCocktail.tags.push(tagSlug);
+						callback(null);
+					} else {
+						Tag.create({
+							name: tagName,
+							slug: tagSlug
+						}, function (err, tag) {
+							if (err) {
+								callback(err);
+							}
 							addCocktail.tags.push(tagSlug);
 							callback(null);
-						} else {
-							Tag.create({
-								name: tagName,
-								slug: tagSlug
-							}, function (err, tag) {
-								if (err) {
-									callback(err);
-								}
-								addCocktail.tags.push(tagSlug);
-								callback(null);
-							});
-						}
-					});
-				}
-		);
+						});
+					}
+				});
+			} else {
+				callback(null);
+			}
+		});
 	});
 
 	asyncLoader.push( function (callback) {
 
-				// Editing
-				if (req.param('id')) {
-					Cocktail.update({_id: req.param('id')}, addCocktail, function (err, result) {
-						if (err) {
-							callback(err);
-						}
-						addCocktail.id = req.param('id');
-						callback(null);
-					});
-
-					// Adding
-				} else {
-					Cocktail.create(addCocktail, function (err, result) {
-						if (err) {
-							callback(err);
-						}
-						addCocktail.id = result._id;
-						callback(null);
-					});
+		// Editing
+		if (req.param('id')) {
+			Cocktail.update({_id: req.param('id')}, addCocktail, function (err, result) {
+				if (err) {
+					callback(err);
 				}
-			}
-	);
+				addCocktail.id = req.param('id');
+				callback(null);
+			});
+
+			// Adding
+		} else {
+			Cocktail.create(addCocktail, function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				addCocktail.id = result._id;
+				callback(null);
+			});
+		}
+	});
 
 	// Run all functions and redirect to the View page
 	async.series(asyncLoader, function () {

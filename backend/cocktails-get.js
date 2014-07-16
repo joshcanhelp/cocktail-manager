@@ -202,6 +202,32 @@ module.exports.remove = function (req, res) {
 
 	// Run all functions and redirect to the homepage
 	async.series(asyncLoader, function () {
-		return res.redirect('/#view-all');
+
+		// Iterate through the tags to delete empty ones
+		async.eachSeries(cocktail.tags, function (item, callback) {
+
+			Cocktail.find({tags: item}, function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				console.log(result);
+				if (!result.length) {
+					Tag.remove({slug: item}, function (err, result) {
+						if (err) {
+							callback(err);
+						}
+						callback(null);
+					});
+				} else {
+					callback(null);
+				}
+			});
+		}, function (err) {
+			if (err) {
+				throw err;
+			}
+			return res.redirect('/#view-all');
+		});
+
 	});
 };

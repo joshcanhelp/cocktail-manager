@@ -1,4 +1,6 @@
-form(class="form-horizontal", method="POST")
+form#add-edit-cocktail.form-horizontal(method="POST")
+
+  // Name
   .form-group
     label.col-sm-2.control-label(for="cocktailName") Name
     .col-sm-10
@@ -6,6 +8,8 @@ form(class="form-horizontal", method="POST")
         input#cocktailName.form-control(name="cocktailName", type="text", value=cocktail.name)
       else
         input#cocktailName.form-control(name="cocktailName", type="text")
+
+  // Description
   .form-group
     label.col-sm-2.control-label(for="cocktailDesc") Description
     .col-sm-10
@@ -13,6 +17,8 @@ form(class="form-horizontal", method="POST")
         textarea#cocktailDesc.form-control(name="cocktailDesc", rows="3")= cocktail.description
       else
         textarea#cocktailDesc.form-control(name="cocktailDesc", rows="3")
+
+  // Ingredients
   .form-group.ingredient-labels
     label.col-sm-2.control-label Ingredients
     .col-sm-2
@@ -24,25 +30,52 @@ form(class="form-horizontal", method="POST")
     .col-sm-6
       label
         small Ingredient
-  if isEdit && cocktail.ingredients.length
-    p
-      strong Show ingredients
+
+  - var ingredientCounter = 0
+  if ! isEdit
+    +ingredientFields('', '', '')
+  else
+    if cocktail.ingredients && cocktail.ingredients.length
+      for ingredient in cocktail.ingredients
+        +ingredientFields(ingredient.amount, ingredient.unit, ingredient.name)
+
   .form-group#add-ingredient-control
     .col-sm-12
       p.text-right
         button#add-ingredient.btn.btn-default(type="button") Add Ingredient
+
+  // Steps
+  - var stepCounter = 1
+  if ! isEdit
+    .form-group
+      label.col-sm-2.control-label Step #{ stepCounter }
+      .col-sm-10
+        textarea.form-control(name="cocktailStep[]", rows="2")
+  else
+    if cocktail.steps && cocktail.steps.length
+      for step in cocktail.steps
+        .form-group
+          label.col-sm-2.control-label Step #{ stepCounter }
+          .col-sm-10
+            textarea.form-control(name="cocktailStep[]", rows="2")= step
+        - stepCounter++
+
   .form-group#add-step-control
     .col-sm-12
       p.text-right
         button#add-step.btn.btn-default(type="button") Add Step
+
+  // Tags
   .form-group
     label.col-sm-2.control-label(for="cocktailTags") Tags
     .col-sm-10
-      if isEdit && cocktail.tags.length
-        textarea#cocktailTags.form-control(name="cocktailTags", rows="3")= cocktail.tags.join(', ')
+      if isEdit && cocktail.tagNames.length
+        textarea#cocktailTags.form-control(name="cocktailTags", rows="3")= cocktail.tagNames.join(', ')
       else
         textarea#cocktailTags.form-control(name="cocktailTags", rows="3")
   hr
+
+  // Save and cancel
   .form-group
     .col-sm-12
       p

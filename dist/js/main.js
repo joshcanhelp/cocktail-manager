@@ -3,6 +3,8 @@
 jQuery(document).ready(function ($) {
 	"use strict";
 
+	var hash = window.location.hash;
+
 	/*
 	Tabbed nav
 	*/
@@ -13,7 +15,6 @@ jQuery(document).ready(function ($) {
 		$(this).tab('show');
 	});
 
-	var hash = window.location.hash;
 	if (hash) {
 		viewNav.find('a[href="' + hash + '"]').tab('show');
 	} else{
@@ -25,7 +26,7 @@ jQuery(document).ready(function ($) {
 	*/
 
 	// Number of steps showing
-	var ingredientCount = 0;
+	var ingredientCount = 1;
 
 	// Create select options from a standard list
 	var unitOptions = '<option val="">Select...</option>';
@@ -33,34 +34,28 @@ jQuery(document).ready(function ($) {
 		unitOptions += '<option val="' + el.val + '">' + el.name + '</option>';
 	});
 
-	// Add the first set of fields
-	renderIngredient();
-
 	// Add another set of fields when clicking that button
 	$('#add-ingredient').click(function (e) {
 		e.preventDefault();
 		renderIngredient();
 	});
 
+	$(document).on('click', '#add-edit-cocktail .glyphicon-remove', function (e) {
+		$(this).parents('.form-group').remove();
+		ingredientCount--;
+	});
+
 	// Set of fields to add an ingredient
 	function renderIngredient() {
+		var ingredientControl = $('#add-ingredient-control');
+		var ingredientField = ingredientControl.prev('.form-group').clone();
+
+		ingredientField.find('input').val('');
+		ingredientField.find('option').removeAttr('selected');
+		ingredientField.find('.col-sm-2:first').html('').append('<span class="glyphicon glyphicon-remove"/>');
+
+		ingredientControl.before(ingredientField);
 		ingredientCount++;
-		$('#add-ingredient-control').before(
-			'<div class="form-group">' +
-			'<div class="col-sm-2">&nbsp;</div>' +
-			'<div class="col-sm-2">' +
-			'<input name="cocktailPartsAmount[]" type="text" class="form-control">' +
-			'</div>' +
-			'<div class="col-sm-2">' +
-			'<select name="cocktailPartsUnit[]" class="form-control">' +
-			unitOptions +
-			'</select>' +
-			'</div>' +
-			'<div class="col-sm-6">' +
-			'<input name="cocktailPartsName[]" type="text" class="form-control">' +
-			'</div>' +
-			'</div>'
-		);
 	}
 
 	/*
@@ -68,10 +63,7 @@ jQuery(document).ready(function ($) {
 	*/
 
 	// Number of steps showing
-	var stepCount = 0;
-
-	// Add the first step
-	renderStep();
+	var stepCount = 1;
 
 	// On button click, count the step and add a field
 	$('#add-step').click(function (e) {
@@ -81,14 +73,17 @@ jQuery(document).ready(function ($) {
 
 	// Add another step field
 	function renderStep() {
-		stepCount++;
-		$('#add-step-control').before(
-			'<div class="form-group">' +
-			'<label class="col-sm-2 control-label">Step ' + stepCount + '</label>' +
-			'<div class="col-sm-10">' +
-			'<textarea name="cocktailStep[]" class="form-control" rows="2"></textarea>' +
-			'</div>'
-		);
+		var stepControl = $('#add-step-control');
+		var stepField = stepControl.prev('.form-group').clone();
+		var stepLabel = stepField.find('.col-sm-2:first');
+
+		stepField.find('textarea').text('');
+		stepLabel.text('Step ' + ++stepCount);
+		stepLabel.append('<br>');
+		stepLabel.append('<span class="glyphicon glyphicon-remove"/>');
+
+		stepControl.before(stepField);
+
 	}
 
 	/*

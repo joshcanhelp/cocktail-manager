@@ -38,11 +38,10 @@ This is my attempt to use what I learned to solve a very unimportant problem I w
 ## Roadmap
 
 - Admin account and login to control form submissions
-- Edit capability
 - Remove capability
 - Grunt
-	- Sass
-	- Coffeescript (maybe)
+- Sass
+- Coffeescript (maybe)
 - Testing with Mocha + Chai
 - Backbone
 - Angular

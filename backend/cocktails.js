@@ -57,7 +57,6 @@ module.exports.get = function (req, res) {
 	async.series(asyncLoader, function () {
 		pageVars.pageTitle = 'Cocktail Manager';
 		pageVars.isAdmin = true;
-		pageVars.isEdit = false;
 		// console.log(pageVars);
 		return res.render('home', pageVars);
 	});
@@ -67,15 +66,33 @@ module.exports.get = function (req, res) {
 module.exports.view = function (req, res) {
 	"use strict";
 
-	Cocktail.findOne({_id: req.param('id')}, function (err, result) {
+	Cocktail.findOne({_id: req.param('id')}, function (err, cocktail) {
 		if (err) {
 			throw err;
 		}
-		return res.render('view', {
-			pageTitle: result.name,
-			cocktail : result,
-			isAdmin  : true
-		});
+
+		if (cocktail.tags.length) {
+			Tag.find({slug: {$in: cocktail.tags}}, function (err, tags) {
+				if (err) {
+					throw err;
+				}
+
+				cocktail.tags = tags;
+
+				return res.render('view', {
+					pageTitle: cocktail.name,
+					cocktail : cocktail,
+					isAdmin  : true
+				});
+
+			});
+		} else {
+			return res.render('view', {
+				pageTitle: cocktail.name,
+				cocktail : cocktail,
+				isAdmin  : true
+			});
+		}
 	});
 
 };
@@ -128,12 +145,25 @@ module.exports.add = function (req, res) {
 
 	asyncLoader.push(
 		function (callback) {
-			Cocktail.create(addCocktail, function (err, result) {
-				if (err) {
-					callback(err);
-				}
-				callback(null);
-			});
+
+			// Editing
+			if (req.param('id')) {
+				Cocktail.update({_id: req.param('id')}, addCocktail, function (err, result) {
+					if (err) {
+						callback(err);
+					}
+					callback(null);
+				});
+
+			// Adding
+			} else {
+				Cocktail.create(addCocktail, function (err, result) {
+					if (err) {
+						callback(err);
+					}
+					callback(null);
+				});
+			}
 		}
 	);
 
@@ -145,15 +175,40 @@ module.exports.add = function (req, res) {
 module.exports.edit = function (req, res) {
 	"use strict";
 
-	Cocktail.findOne({_id: req.param('id')}, function (err, result) {
-		if (err) {
-			throw err;
+	var asyncLoader = [];
+	var cocktail;
+
+	asyncLoader.push(function (callback) {
+		Cocktail.findOne({_id: req.param('id')}, function (err, result) {
+			if (err) {
+				callback(err);
+			}
+			cocktail = result;
+			callback(null);
+		});
+	});
+
+	asyncLoader.push(function (callback) {
+		if (cocktail.tags.length) {
+			Tag.find({slug: {$in: cocktail.tags}}, function (err, tags) {
+				if (err) {
+					callback(err);
+				}
+				cocktail.tagNames = _.map(tags, function (value, key, list) {
+					return value.name;
+				});
+				callback(null);
+			});
 		}
+	});
+
+
+	async.series(asyncLoader, function () {
 		return res.render('edit', {
-			pageTitle: 'Edit ' + result.name,
-			cocktail : result,
+			pageTitle: 'Edit ' + cocktail.name,
+			cocktail : cocktail,
 			isAdmin  : true,
-			isEdit: true
+			isEdit   : true
 		});
 	});
 

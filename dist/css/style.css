@@ -41,7 +41,8 @@ body {
 }
 
 .glyphicon {
-	margin-right: 10px
+	margin-right: 10px;
+	cursor: pointer;
 }
 
 
@@ -53,6 +54,10 @@ body {
 	color: red
 }
 
+.control-label .glyphicon-remove {
+	margin: 8px 0 0;
+}
+
 .tag-name {
 	font-size: 0.8em;
 	display: inline-block;
@@ -62,6 +67,9 @@ body {
 	border-bottom-right-radius: 10px;
 	border-top-left-radius: 10px;
 	margin: 0 0 8px 8px;
+}
+
+.tag-listing .tag-name {
 	cursor: pointer;
 }
 

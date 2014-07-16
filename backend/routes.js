@@ -21,6 +21,7 @@ module.exports = function (app) {
 
 	// Edit cocktail
 	app.get('/edit/:id', cocktails.edit);
+	app.post('/edit/:id', cocktails.add);
 
 	// Remove cocktail
 	app.get('/remove/:id', function (req, res) {

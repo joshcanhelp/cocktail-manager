@@ -25,8 +25,6 @@ module.exports = function (app) {
 	app.post('/edit/:id', cocktailsPost.add);
 
 	// Remove cocktail
-	app.get('/remove/:id', function (req, res) {
-		return res.send(200, 'Todo');
-	});
+	app.get('/remove/:id', cocktailsGet.remove);
 
 };

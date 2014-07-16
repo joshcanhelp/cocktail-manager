@@ -14,7 +14,7 @@ block content
       label.col-sm-2.control-label Description
       .col-sm-10
         p= cocktail.description
-    if cocktail.tags
+    if cocktail.tags && cocktail.tags.length
       .form-group
         label.col-sm-2.control-label Tags
         .col-sm-10

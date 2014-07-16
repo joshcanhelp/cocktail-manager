@@ -159,3 +159,46 @@ module.exports.edit = function (req, res) {
 	});
 
 };
+
+/**
+ * Remove a cocktail
+ *
+ * @param req
+ * @param res
+ */
+module.exports.remove = function (req, res) {
+	"use strict";
+
+	var asyncLoader = [];
+	var cocktail;
+
+	// Get the cocktail to remove
+	asyncLoader.push(function (callback) {
+		Cocktail.findOne({_id: req.param('id')}, function (err, result) {
+			if (err) {
+				callback(err);
+			}
+			cocktail = result;
+			callback(null);
+		});
+	});
+
+	// Delete the cocktail if it exists
+	asyncLoader.push(function (callback) {
+		if (!cocktail) {
+			callback(null);
+		}
+
+		Cocktail.remove({_id: cocktail._id}, function (err, result) {
+			if (err) {
+				callback(err);
+			}
+			callback(null);
+		});
+	});
+
+	// Run all functions and redirect to the homepage
+	async.series(asyncLoader, function () {
+		return res.redirect('/#view-all');
+	});
+};

@@ -1,12 +1,13 @@
 /* globals module, app, process, require, console, express */
 
-var cocktails = require('./cocktails');
+var cocktailsGet = require('./cocktails-get');
+var cocktailsPost = require('./cocktails-post');
 
 module.exports = function (app) {
 	"use strict";
 
 	// Homepage
-	app.get('/', cocktails.get);
+	app.get('/', cocktailsGet.all);
 
 	// Login
 	app.post('/login', function (req, res) {
@@ -14,14 +15,14 @@ module.exports = function (app) {
 	});
 
 	// Add cocktail
-	app.post('/', cocktails.add);
+	app.post('/', cocktailsPost.add);
 
 	// View cocktail
-	app.get('/view/:id', cocktails.view);
+	app.get('/view/:id', cocktailsGet.view);
 
 	// Edit cocktail
-	app.get('/edit/:id', cocktails.edit);
-	app.post('/edit/:id', cocktails.add);
+	app.get('/edit/:id', cocktailsGet.edit);
+	app.post('/edit/:id', cocktailsPost.add);
 
 	// Remove cocktail
 	app.get('/remove/:id', function (req, res) {

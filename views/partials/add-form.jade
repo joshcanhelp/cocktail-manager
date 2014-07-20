@@ -47,7 +47,7 @@ form#add-edit-cocktail.form-horizontal(method="POST")
   ol#step-list
     // Steps
     if ! isEdit
-      li.form-group.cocktail-step
+      .form-group.cocktail-step
         label.col-sm-2.control-label
         .col-sm-1
         li.col-sm-9
@@ -74,6 +74,7 @@ form#add-edit-cocktail.form-horizontal(method="POST")
         textarea#cocktailTags.form-control(name="cocktailTags" rows="3")= cocktail.tagNames.join(', ')
       else
         textarea#cocktailTags.form-control(name="cocktailTags" rows="3")
+
   hr
 
   // Save and cancel

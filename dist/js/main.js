@@ -147,10 +147,11 @@ jQuery(document).ready(function ($) {
 	Edit controls
 	*/
 
-	$('#cocktail-table .glyphicon-remove').click(function (e) {
+	$('.remove-cocktail').click(function (e) {
 		if (! window.confirm('Are you sure you want to delete this cocktail? This cannot be undone.')) {
 			e.preventDefault();
 		}
 	});
 
 });
+

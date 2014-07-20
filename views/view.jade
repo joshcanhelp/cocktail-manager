@@ -58,3 +58,15 @@ block content
           ol.cocktail-steps
             for step in cocktail.steps
               li= step
+
+
+    hr
+
+    .form-group
+      .col-sm-12
+        p
+          a.btn.btn-default(href="/edit/#{ cocktail._id }")
+            span.glyphicon.glyphicon-pencil
+          span &nbsp;&nbsp;
+          a.btn.btn-default(href="/remove/#{ cocktail._id }")
+            span.glyphicon.glyphicon-remove.remove-cocktail

@@ -40,7 +40,7 @@ body {
 	padding: 12px;
 }
 
-.glyphicon {
+#cocktail-table .glyphicon {
 	margin-right: 10px;
 	cursor: pointer;
 }

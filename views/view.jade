@@ -2,7 +2,7 @@ extends index
 
 block content
 
-  ul(class="nav nav-pills", id="view-nav")
+  ul#view-nav.nav.nav-pills
     li
       a(href="/#view-all") &laquo; Home
 
@@ -10,10 +10,12 @@ block content
     h2= cocktail.name
 
   div.form-horizontal
+
     .form-group
       label.col-sm-2.control-label Description
       .col-sm-10
         p= cocktail.description
+
     if cocktail.tags && cocktail.tags.length
       .form-group
         label.col-sm-2.control-label Tags
@@ -21,6 +23,7 @@ block content
           p
             for tag in cocktail.tags
               span.tag-name= tag
+
     .form-group.ingredient-labels
       label.col-sm-2.control-label Ingredients
       .col-sm-2
@@ -32,6 +35,7 @@ block content
       .col-sm-6
         label
           small Ingredient
+
     if cocktail.ingredients
       for ingredient in cocktail.ingredients
         .form-group.ingredient-labels
@@ -43,7 +47,9 @@ block content
             p= ingredient.unit
           .col-sm-6
             p= ingredient.name
+
     hr
+
     if cocktail.steps
       - var counter = 0
       .form-group

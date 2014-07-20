@@ -1,8 +1,7 @@
 mixin ingredientFields(amount, unit, name)
-  .form-group
+  .form-group.cocktail-ingredient
     label.col-sm-2.control-label
-      if ingredientCounter > 0
-        span.glyphicon.glyphicon-remove
+    .col-sm-1
     .col-sm-2
       input.form-control(name="cocktailPartsAmount[]", type="text", value=amount)
     .col-sm-2
@@ -13,6 +12,5 @@ mixin ingredientFields(amount, unit, name)
         option(val="tsp", selected= unit == "Teaspoons") Teaspoons
         option(val="dash", selected= unit == "Dashes") Dashes
         option(val="splash", selected= unit == "Splashes") Splashes
-    .col-sm-6
+    .col-sm-5
       input.form-control(name="cocktailPartsName[]", type="text", value=name)
-  - ingredientCounter++

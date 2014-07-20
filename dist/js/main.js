@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
 	"use strict";
 
 	var hash = window.location.hash;
+	var addCocktailForm = $('#add-edit-cocktail');
 
 	/*
 	Tabbed nav
@@ -21,6 +22,7 @@ jQuery(document).ready(function ($) {
 		viewNav.find('a[href="#view-all"]').tab('show');
 	}
 
+
 	/*
 	Ingredient fields
 	*/
@@ -28,21 +30,10 @@ jQuery(document).ready(function ($) {
 	// Number of steps showing
 	var ingredientCount = 1;
 
-	// Create select options from a standard list
-	var unitOptions = '<option val="">Select...</option>';
-	$.each(cmAllUnits(), function (index, el) {
-		unitOptions += '<option val="' + el.val + '">' + el.name + '</option>';
-	});
-
 	// Add another set of fields when clicking that button
 	$('#add-ingredient').click(function (e) {
 		e.preventDefault();
 		renderIngredient();
-	});
-
-	$(document).on('click', '#add-edit-cocktail .glyphicon-remove', function (e) {
-		$(this).parents('.form-group').remove();
-		ingredientCount--;
 	});
 
 	// Set of fields to add an ingredient
@@ -52,18 +43,16 @@ jQuery(document).ready(function ($) {
 
 		ingredientField.find('input').val('');
 		ingredientField.find('option').removeAttr('selected');
-		ingredientField.find('.col-sm-2:first').html('').append('<span class="glyphicon glyphicon-remove"/>');
 
 		ingredientControl.before(ingredientField);
 		ingredientCount++;
+		decorateListItems();
 	}
+
 
 	/*
 	Step fields
 	*/
-
-	// Number of steps showing
-	var stepCount = 1;
 
 	// On button click, count the step and add a field
 	$('#add-step').click(function (e) {
@@ -74,16 +63,54 @@ jQuery(document).ready(function ($) {
 	// Add another step field
 	function renderStep() {
 		var stepControl = $('#add-step-control');
-		var stepField = stepControl.prev('.form-group').clone();
-		var stepLabel = stepField.find('.col-sm-2:first');
+		var stepField = stepControl.prev().find('.cocktail-step:last').clone();
 
 		stepField.find('textarea').text('');
-		stepLabel.text('Step ' + ++stepCount);
-		stepLabel.append('<br>');
-		stepLabel.append('<span class="glyphicon glyphicon-remove"/>');
+		stepField.find('.control-label').text('');
 
-		stepControl.before(stepField);
+		$('#step-list').append(stepField);
 
+		decorateListItems();
+	}
+
+	/*
+	Actions for both steps and ingredients
+	*/
+
+	decorateListItems();
+
+	$(document).on('click', '#add-edit-cocktail .glyphicon-remove', function (e) {
+		var removeTarget = $(this).parents('.form-group');
+		removeTarget.remove();
+		decorateListItems();
+	});
+
+	function decorateListItems () {
+
+		var stepCount = 0;
+
+		$('.cocktail-ingredient').each(function (index) {
+			removeIt($(this), index);
+		});
+
+		$('.cocktail-step').each(function (index) {
+			var el = $(this);
+			removeIt(el, index);
+			stepIt(el, index);
+		});
+		
+		function removeIt(el, index) {
+			var label = el.find('.col-sm-1');
+			if (index > 0 && !label.find('.glyphicon-remove').length) {
+				label.append('<span class="glyphicon glyphicon-remove text-right"/>');
+			}
+		}
+
+		function stepIt(el, index) {
+			if (index === 0) {
+				el.find('.control-label').text('Steps');
+			}
+		}
 	}
 
 	/*
@@ -127,31 +154,3 @@ jQuery(document).ready(function ($) {
 	});
 
 });
-
-// Standard units used on the drop-down when adding a cocktail
-function cmAllUnits() {
-	"use strict";
-
-	return [
-		{
-			val: 'oz',
-			name: 'Ounces'
-		},
-		{
-			val: 'tbl',
-			name: 'Tablespoons'
-		},
-		{
-			val: 'tsp',
-			name: 'Teaspoons'
-		},
-		{
-			val: 'dash',
-			name: 'Dashes'
-		},
-		{
-			val: 'splash',
-			name: 'Splashes'
-		}
-	];
-}

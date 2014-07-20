@@ -34,7 +34,7 @@ block content
             for cocktail in cocktails
               if !cocktail.tags
                 - cocktail.tags = []
-              tr(id="#{ cocktail._id }", data-tag-slugs="#{ cocktail.tags.join(' ') }")
+              tr(id="#{ cocktail._id }" data-tag-slugs="#{ cocktail.tags.join(' ') }")
                 td
                   a(href="/view/#{ cocktail._id }")
                     strong= cocktail.name.replace(" ", "\u00a0")
@@ -53,24 +53,24 @@ block content
       else
         p
           em No cocktails to show ...
-    div(class="tab-pane", id="add")
+    div#add.tab-pane
       .page-header
         h2 Add one
        include partials/add-form
-    div(class="tab-pane", id="login")
+    div#login.tab-pane
       .page-header
         h2 Like a boss
-      form.form-horizontal(method="POST", action="/login")
+      form.form-horizontal(method="POST" action="/login")
         .form-group
           label.col-sm-2.control-label(for="loginEmail") Email
           .col-sm-4
-            input#loginEmail.form-control(name="loginEmail", type="email")
+            input#loginEmail.form-control(name="loginEmail" type="email")
         .form-group
           label.col-sm-2.control-label(for="loginPassword") Password
           .col-sm-4
-            input#loginPassword.form-control(name="loginPassword", type="password")
+            input#loginPassword.form-control(name="loginPassword" type="password")
         hr
         .form-group
           .col-sm-12
             p
-              input.btn.btn-primary(type="submit", value="Login")
+              input.btn.btn-primary(type="submit" value="Login")

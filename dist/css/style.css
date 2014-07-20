@@ -45,7 +45,6 @@ body {
 	cursor: pointer;
 }
 
-
 .glyphicon-pencil {
 	color: #444
 }
@@ -81,6 +80,12 @@ body {
 	background: #ccc
 }
 
-.cocktail-steps {
-	padding-left: 20px
+#step-list {
+	padding: 0;
+	margin: 0;
+}
+
+.cocktail-step textarea {
+	display: inline-block;
+	vertical-align: top;
 }

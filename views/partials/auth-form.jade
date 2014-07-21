@@ -1,0 +1,24 @@
+if message && message.length
+  .alert.problem= message
+
+form.form-horizontal#auth-form(method="POST" action=hasUser ? "/login" : "/register")
+  if !hasUser
+    p Create an admin login to use for adding and editing cocktails. You will only create one user here and use that information to log in going forward.
+  .form-group
+    label.col-sm-2.control-label(for="loginEmail") Email
+    .col-sm-4
+      input#loginEmail.form-control(name="loginEmail" type="email" required)
+  .form-group
+    label.col-sm-2.control-label(for="loginPassword") Password
+    .col-sm-4
+      input#loginPassword.form-control(name="loginPassword" type="password" required)
+  if !hasUser
+    .form-group
+      label.col-sm-2.control-label(for="confirmPassword") Confirm Password
+      .col-sm-4
+        input#confirmPassword.form-control(name="confirmPassword" type="password" required)
+  hr
+  .form-group
+    .col-sm-12
+      p
+        input.btn.btn-primary(type="submit" value=hasUser ? "Login" : "Create User")

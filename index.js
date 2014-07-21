@@ -1,19 +1,22 @@
 /* globals module, app, process, require, console */
 
 var express = require('express');
-var bodyParser = require('body-parser');
+var passport = require('passport');
 
 // Initialize & configure express app
 var app = express();
 
+// Configure Passport
+require('./config/passport')(passport);
+
 // Configure Express
-require('./config/config.js')(app);
+require('./config/config')(app, express, passport);
 
 // Mongoose and MongoDB
-require('./config/db.js');
+require('./config/db');
 
 // All URL routes
-require('./backend/routes.js')(app);
+require('./backend/routes')(app, passport);
 
 // Start server
 app

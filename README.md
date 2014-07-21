@@ -9,10 +9,9 @@ Built with:
 - Jade
 - Mongoose on MongoDB
 - Bootstrap v3
+- Passport.js
 - Underscore.js
 - Async.js
-
-**Note:** There is no admin control currently so putting this live could result in a lot of automated spam being generated. It's also still very much in development so don't use this in the wild quite yet as the DB schema is likely to change a bit. 
 
 ## Concept
 
@@ -34,10 +33,12 @@ This is my attempt to use what I learned to solve a very unimportant problem I w
 4. `mongod --dbpath ./db`
 4. `node index.js`
 5. Go to http://localhost:3000 if this is on your local machine
+6. Click on "Login" and you should see a message directing you to create a user. Enter your email and password twice to create the single admin user
+7. After submitting, you should be logged in and able to add/edit cocktails
 
 ## Roadmap
 
-- Admin account and login to control form submissions
+- Demo instance on Heroku
 - Grunt
 - Sass
 - Coffeescript (maybe)
@@ -45,4 +46,3 @@ This is my attempt to use what I learned to solve a very unimportant problem I w
 - Backbone
 - Angular
 - Ember
-- Heroku instructions and hooks for easy deployment

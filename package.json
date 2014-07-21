@@ -18,9 +18,15 @@
   "homepage": "https://github.com/joshcanhelp/cocktail-manager",
   "dependencies": {
     "async": "^0.9.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
+    "connect-flash": "^0.1.1",
     "express": "^4.5.1",
+    "express-session": "^1.6.5",
+    "moment": "^2.7.0",
     "mongoose": "^3.8.12",
+    "passport": "^0.2.0",
+    "passport-local": "^1.0.0",
     "underscore": "^1.6.0"
   }
 }

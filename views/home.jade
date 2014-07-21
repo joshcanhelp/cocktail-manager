@@ -8,6 +8,8 @@ block content
     if isAdmin
       li
         a(href="#add") Add
+      li
+        a(href="/logout") Logout
     else
       li
         a(href="#login") Login
@@ -29,7 +31,8 @@ block content
               th Description
               th Ingredients
               th Steps
-              th Controls
+              if isAdmin
+                th Controls
           tbody
             for cocktail in cocktails
               if !cocktail.tags
@@ -44,11 +47,12 @@ block content
                     em= cocktail.description
                 td= cocktail.ingredients.length
                 td= cocktail.steps.length
-                td
-                  a(href="/edit/#{ cocktail._id }")
-                    span.glyphicon.glyphicon-pencil
-                  a(href="/remove/#{ cocktail._id }")
-                    span.glyphicon.glyphicon-remove.remove-cocktail
+                if isAdmin
+                  td
+                    a(href="/edit/#{ cocktail._id }")
+                      span.glyphicon.glyphicon-pencil
+                    a(href="/remove/#{ cocktail._id }")
+                      span.glyphicon.glyphicon-remove.remove-cocktail
 
       else
         p
@@ -56,21 +60,8 @@ block content
     div#add.tab-pane
       .page-header
         h2 Add one
-       include partials/add-form
+      include partials/add-form
     div#login.tab-pane
       .page-header
         h2 Like a boss
-      form.form-horizontal(method="POST" action="/login")
-        .form-group
-          label.col-sm-2.control-label(for="loginEmail") Email
-          .col-sm-4
-            input#loginEmail.form-control(name="loginEmail" type="email")
-        .form-group
-          label.col-sm-2.control-label(for="loginPassword") Password
-          .col-sm-4
-            input#loginPassword.form-control(name="loginPassword" type="password")
-        hr
-        .form-group
-          .col-sm-12
-            p
-              input.btn.btn-primary(type="submit" value="Login")
+      include partials/auth-form

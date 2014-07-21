@@ -153,5 +153,16 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	/*
+	Auth/login
+	*/
+
+	$('#auth-form[action="/register"]').submit(function (e) {
+		if ($(this).find('#loginPassword').val() !== $(this).find('#confirmPassword').val()) {
+			e.preventDefault();
+			alert('Passwords do not match.');
+		}
+	});
+
 });
 

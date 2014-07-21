@@ -7,6 +7,7 @@ var async = require('async');
 // Grab Mongoose models
 var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
+var User = require('./models/User');
 
 /**
  * Get all cocktails and tags for display on the homepage
@@ -57,11 +58,23 @@ module.exports.all = function (req, res) {
 			}
 		);
 	});
+	// Do we have a user?
+	asyncLoader.push(function (callback) {
+
+		User.findOne({}, function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				pageVars.hasUser = result ? true : false;
+				callback(null);
+			}
+		);
+	});
 
 	// Run the functions as a series, serve the page when complete
 	async.series(asyncLoader, function () {
 		pageVars.pageTitle = 'Cocktail Manager';
-		pageVars.isAdmin = true;
+		pageVars.isAdmin = req.isAuthenticated();
 		return res.render('home', pageVars);
 	});
 
@@ -95,7 +108,6 @@ module.exports.view = function (req, res) {
 				return res.render('view', {
 					pageTitle: cocktail.name,
 					cocktail : cocktail,
-					isAdmin  : true
 				});
 
 			});
@@ -103,7 +115,7 @@ module.exports.view = function (req, res) {
 			return res.render('view', {
 				pageTitle: cocktail.name,
 				cocktail : cocktail,
-				isAdmin  : true
+				isAdmin: req.isAuthenticated()
 			});
 		}
 	});
@@ -156,7 +168,6 @@ module.exports.edit = function (req, res) {
 		return res.render('edit', {
 			pageTitle: 'Edit ' + cocktail.name,
 			cocktail : cocktail,
-			isAdmin  : true,
 			isEdit   : true
 		});
 	});
@@ -210,7 +221,6 @@ module.exports.remove = function (req, res) {
 				if (err) {
 					callback(err);
 				}
-				console.log(result);
 				if (!result.length) {
 					Tag.remove({slug: item}, function (err, result) {
 						if (err) {

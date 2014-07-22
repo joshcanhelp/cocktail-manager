@@ -19,4 +19,5 @@ module.exports = mongoose.connect(dbLocations[nodeEnv], function (err) {
 	} else {
 		console.log('Succeeded connecting to: ' + dbLocations[nodeEnv]);
 	}
+
 });

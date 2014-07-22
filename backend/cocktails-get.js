@@ -1,10 +1,10 @@
 /* globals require, module, console */
 
-// Grab libraries
+// Module includes
 var _ = require('underscore');
 var async = require('async');
 
-// Grab Mongoose models
+// App includes
 var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
 var User = require('./models/User');
@@ -27,9 +27,9 @@ module.exports.all = function (req, res) {
 	// Get all cocktails
 	asyncLoader.push( function (callback) {
 
-		Cocktail.find({}, {}, {
-				sort: { date: -1 }
-			},
+		// Get all cocktails, sorted newest to oldest
+		Cocktail.find({}, {},
+			{ sort: { date: -1 } },
 			function (err, result) {
 				if (err) {
 					callback(err);
@@ -41,14 +41,12 @@ module.exports.all = function (req, res) {
 
 	});
 
-	// Get all tags for filtering
+	// All tags for on-page filtering
 	asyncLoader.push(function (callback) {
 
-		Tag.find({}, {}, {
-				sort: {
-					slug: 1
-				}
-			},
+		// Get all tags sorted alpha by slug
+		Tag.find({}, {},
+			{ sort: {	slug: 1	}	},
 			function (err, result) {
 				if (err) {
 					callback(err);
@@ -58,7 +56,8 @@ module.exports.all = function (req, res) {
 			}
 		);
 	});
-	// Do we have a user?
+
+	// Check for a user to build the auth form
 	asyncLoader.push(function (callback) {
 
 		User.findOne({}, function (err, result) {
@@ -89,36 +88,44 @@ module.exports.all = function (req, res) {
 module.exports.view = function (req, res) {
 	"use strict";
 
-	Cocktail.findOne({_id: req.param('id')}, function (err, cocktail) {
-		if (err) {
-			throw err;
-		}
+	Cocktail.findOne(
+		{_id: req.param('id')},
+		function (err, cocktail) {
 
-		// If we have tags, need the full name for each
-		if (cocktail.tags.length) {
-			Tag.find({slug: {$in: cocktail.tags}}, function (err, tags) {
-				if (err) {
-					throw err;
-				}
+			if (err) {
+				throw err;
+			}
 
-				cocktail.tags = _.map(tags, function (value, key, list) {
-					return value.name;
-				});
+			// If we have tags, need the full name for each
+			if (cocktail.tags.length) {
+				Tag.find(
+					{ slug: { $in: cocktail.tags } },
+					function (err, tags) {
 
+						if (err) {
+							throw err;
+						}
+
+						cocktail.tags = _.map(tags, function (value, key, list) {
+							return value.name;
+						});
+
+						return res.render('view', {
+							pageTitle: cocktail.name,
+							cocktail : cocktail
+						});
+
+					});
+
+			// No tags so just serve the page
+			} else {
 				return res.render('view', {
 					pageTitle: cocktail.name,
 					cocktail : cocktail,
+					isAdmin: req.isAuthenticated()
 				});
-
-			});
-		} else {
-			return res.render('view', {
-				pageTitle: cocktail.name,
-				cocktail : cocktail,
-				isAdmin: req.isAuthenticated()
-			});
-		}
-	});
+			}
+		});
 
 };
 
@@ -131,39 +138,58 @@ module.exports.view = function (req, res) {
 module.exports.edit = function (req, res) {
 	"use strict";
 
+	// Array for async functions
 	var asyncLoader = [];
+
+	// Set scope for cocktail
 	var cocktail;
 
 	// Get the cocktail to edit
 	asyncLoader.push(function (callback) {
-		Cocktail.findOne({_id: req.param('id')}, function (err, result) {
-			if (err) {
-				callback(err);
-			}
-			cocktail = result;
-			callback(null);
-		});
+
+		Cocktail.findOne(
+			{ _id: req.param('id') },
+			function (err, result) {
+				if (err) {
+					callback(err);
+				}
+				cocktail = result;
+				callback(null);
+			});
+
 	});
 
 	// Get all tags for the cocktail and format the display
 	asyncLoader.push(function (callback) {
+
+		// If we have tags, get and format
 		if (cocktail.tags.length) {
-			Tag.find({slug: {$in: cocktail.tags}}, function (err, tags) {
-				if (err) {
-					callback(err);
-				}
-				cocktail.tagNames = _.map(tags, function (value, key, list) {
-					return value.name;
+
+			Tag.find(
+				{ slug: { $in: cocktail.tags } },
+				function (err, tags) {
+
+					if (err) {
+						callback(err);
+					}
+
+					// Get all the tag name so they're displayed properly
+					cocktail.tagNames = _.map(tags, function (value) {
+						return value.name;
+					});
+
+					callback(null);
 				});
-				callback(null);
-			});
+
+		// No tags to display
 		} else {
 			cocktail.tagNames = [];
 			callback(null);
 		}
+
 	});
 
-
+	// Run all functions in series and render the page
 	async.series(asyncLoader, function () {
 		return res.render('edit', {
 			pageTitle: 'Edit ' + cocktail.name,
@@ -183,7 +209,10 @@ module.exports.edit = function (req, res) {
 module.exports.remove = function (req, res) {
 	"use strict";
 
+	// Array for async functions
 	var asyncLoader = [];
+
+	// Set scope for cocktail
 	var cocktail;
 
 	// Get the cocktail to remove
@@ -203,7 +232,7 @@ module.exports.remove = function (req, res) {
 			callback(null);
 		}
 
-		Cocktail.remove({_id: cocktail._id}, function (err, result) {
+		Cocktail.remove({_id: cocktail._id}, function (err) {
 			if (err) {
 				callback(err);
 			}
@@ -214,13 +243,16 @@ module.exports.remove = function (req, res) {
 	// Run all functions and redirect to the homepage
 	async.series(asyncLoader, function () {
 
-		// Iterate through the tags to delete empty ones
+		// For each tag, run the function to check for associated cocktails
 		async.eachSeries(cocktail.tags, function (item, callback) {
 
-			Cocktail.find({tags: item}, function (err, result) {
+			// Find a cocktail, if any
+			Cocktail.findOne({tags: item}, function (err, result) {
 				if (err) {
 					callback(err);
 				}
+
+				// No cocktails? Remove the tag
 				if (!result.length) {
 					Tag.remove({slug: item}, function (err, result) {
 						if (err) {
@@ -228,9 +260,12 @@ module.exports.remove = function (req, res) {
 						}
 						callback(null);
 					});
+
+				// Otherwise, continue
 				} else {
 					callback(null);
 				}
+
 			});
 		}, function (err) {
 			if (err) {

@@ -1,5 +1,6 @@
 /* globals module, app, process, require, console */
 
+// Module includes
 var express = require('express');
 var passport = require('passport');
 
@@ -19,11 +20,14 @@ require('./config/db');
 require('./backend/routes')(app, passport);
 
 // Start server
-app
-	.listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
+		"use strict";
+
 		console.log('The server is running on ' + app.get('port'));
 	})
 	.on('error', function () {
+		"use strict";
+
 		console.log('ERROR! Shutting down server...');
 		this.close();
 	});

@@ -42,11 +42,13 @@ jQuery(document).ready(function ($) {
 		var ingredientField = ingredientControl.prev('.form-group').clone();
 
 		ingredientField.find('input').val('');
+		ingredientField.find('option').prop('selected', false);
 		ingredientField.find('option').removeAttr('selected');
 
 		ingredientControl.before(ingredientField);
 		ingredientCount++;
 		decorateListItems();
+		ingredientField.find('input:first').focus();
 	}
 
 
@@ -71,6 +73,8 @@ jQuery(document).ready(function ($) {
 		$('#step-list').append(stepField);
 
 		decorateListItems();
+
+		stepField.find('textarea:first').focus();
 	}
 
 	/*

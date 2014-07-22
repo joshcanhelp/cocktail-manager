@@ -1,16 +1,17 @@
 /* globals require, module, console */
 
-// Grab libraries
+// Module includes
 var _ = require('underscore');
 var async = require('async');
 
-// Grab Mongoose models
+// App includes
 var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
 
 module.exports.add = function (req, res) {
 	"use strict";
 
+	// Basic cocktail fields
 	var addCocktail = {
 		name       : req.body.cocktailName,
 		description: req.body.cocktailDesc,
@@ -20,24 +21,33 @@ module.exports.add = function (req, res) {
 		tags       : []
 	};
 
+	// Array for async functions
 	var asyncLoader = [];
 
+	// Pull apart the incoming tags list
 	_.each(req.body.cocktailTags.split(','), function (el, index, list) {
 
+		// Make sure we have a string, trim whitespace, and prepare
 		var tagName = el.toString().trim();
 		var tagSlug = createSlug(tagName);
 
 		asyncLoader.push( function (callback) {
 
+			// Make sure we have something to store
 			if (tagSlug) {
+
+				// If that tag exists already, no need to add
 				Tag.findOne({slug: tagSlug}, function (err, tag) {
 					if (err) {
 						callback(err);
 					}
 
+					// Associate the tag with the cocktail and continue
 					if (tag) {
 						addCocktail.tags.push(tagSlug);
 						callback(null);
+
+					// Otherwise, create the tag
 					} else {
 						Tag.create({
 							name: tagName,
@@ -69,7 +79,7 @@ module.exports.add = function (req, res) {
 				callback(null);
 			});
 
-			// Adding
+		// Adding
 		} else {
 			Cocktail.create(addCocktail, function (err, result) {
 				if (err) {

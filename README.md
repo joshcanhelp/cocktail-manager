@@ -19,6 +19,21 @@ I finished an in-depth full-stack JS class in June but never had the chance to b
 
 This is my attempt to use what I learned to solve a very unimportant problem I was having with the JS tools I learned. Once this is is feature complete, I want to try out the major MVC frameworks to see what can be gained (or lost). Already the mish-mash of jQuery "partials" is a little unweildy so I'm guessing I can improve the maintainability a bit
 
+## Screenshots
+
+A few samples of what you'll see if you don't feel like installing it yourself. 
+
+### Cocktail listing
+
+![Cocktail Manager home page](https://dl.dropboxusercontent.com/u/64275/github/cocktail-manager-01.png)
+
+### Cocktail editing
+
+![Cocktail Manager edit](https://dl.dropboxusercontent.com/u/64275/github/cocktail-manager-02.png)
+
+### Cocktail viewing
+
+![Cocktail Manager edit](https://dl.dropboxusercontent.com/u/64275/github/cocktail-manager-03.png)
 
 ## Requirements
 

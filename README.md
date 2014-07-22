@@ -54,10 +54,9 @@ A few samples of what you'll see if you don't feel like installing it yourself.
 ## Roadmap
 
 1. Make this site live on EC2 or similar to actually use it myself
-2. Built out a Grunt file to incorporate Sass and possibly Coffeescript
-3. Create a demo instance on Heroku for anyone to try out
-4. Create a full testing scheme with Mocha and Chai
-5. Build out the API for use with MVC frameworks
-6. Add Backbone with a specific Grunt build task
-7. Add Angular with a specific Grunt build task
-8. Add Ember with a specific Grunt build task
+2. Create a demo instance on Heroku for anyone to try out
+3. Create a full testing scheme with Mocha and Chai
+4. Build out the API for use with MVC frameworks
+5. Add Backbone with a specific Grunt build task
+6. Add Angular with a specific Grunt build task
+7. Add Ember with a specific Grunt build task

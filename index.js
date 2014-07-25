@@ -25,9 +25,9 @@ app.listen(app.get('port'), function () {
 
 		console.log('The server is running on ' + app.get('port'));
 	})
-	.on('error', function () {
+	.on('error', function (err) {
 		"use strict";
-
+		throw err;
 		console.log('ERROR! Shutting down server...');
 		this.close();
 	});

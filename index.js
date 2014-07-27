@@ -20,7 +20,7 @@ require('./config/db');
 require('./backend/routes')(app, passport);
 
 // Start server
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), app.get('ipaddress'), function () {
 		"use strict";
 
 		console.log('The server is running on ' + app.get('port'));

@@ -11,6 +11,7 @@ module.exports = function (app, express, passport) {
 
 	// Basic setup
 	app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000);
+	app.set('ipaddress', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
 	app.set('views', 'views');
 	app.set('view engine', 'jade');
 

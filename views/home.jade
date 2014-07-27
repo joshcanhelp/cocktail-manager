@@ -45,8 +45,8 @@ block content
                 td
                   small
                     em= cocktail.description
-                td= cocktail.ingredients.length
-                td= cocktail.steps.length
+                td=cocktail.ingredients ? cocktail.ingredients.length : '0'
+                td=cocktail.steps ? cocktail.steps.length : '0'
                 if isAdmin
                   td
                     a(href="/edit/#{ cocktail._id }")

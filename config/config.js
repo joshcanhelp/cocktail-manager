@@ -10,7 +10,7 @@ module.exports = function (app, express, passport) {
 	"use strict";
 
 	// Basic setup
-	app.set('port', process.env.PORT || 3000);
+	app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000);
 	app.set('views', 'views');
 	app.set('view engine', 'jade');
 

@@ -1,13 +1,16 @@
 /* globals module, app, process, require, console */
 
 var mongoose = require('mongoose');
+
 var nodeEnv = process.env.NODE_ENV || 'production';
+var dbName = 'cocktail-manager';
+var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/';
 
-var dbName = nodeEnv === 'test' ? 'cocktail-manager-test' : 'cocktail-manager';
-var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.OPENSHIFT_MONGODB_DB_URL;
-
-if (!dbUrl) {
-	dbUrl = 'mongodb://localhost/';
+if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+	dbUrl = process.env.OPENSHIFT_MONGODB_DB_URL;
+	dbName = 'cocktails';
+} else if (nodeEnv === 'test') {
+	dbName = 'cocktail-manager-test';
 }
 
 // Connect when this file is required

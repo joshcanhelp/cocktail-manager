@@ -13,6 +13,9 @@ Built with:
 - Underscore.js
 - Async.js
 
+**[View the live demo here »](http://cocktails-joshcanhelp.rhcloud.com/)**
+
+
 ## Concept
 
 I finished an in-depth full-stack JS class in June but never had the chance to build something completely on my own. At the same time, my cocktail recipe collection was getting a little out-of-hand and was stored on [*gasp*] paper. 
@@ -53,10 +56,8 @@ A few samples of what you'll see if you don't feel like installing it yourself.
 
 ## Roadmap
 
-1. Make this site live on EC2 or similar to actually use it myself
-2. Create a demo instance on Heroku for anyone to try out
-3. Create a full testing scheme with Mocha and Chai
-4. Build out the API for use with MVC frameworks
-5. Add Backbone with a specific Grunt build task
-6. Add Angular with a specific Grunt build task
-7. Add Ember with a specific Grunt build task
+1. Create a full testing scheme with Mocha and Chai
+2. Build out the API for use with MVC frameworks
+3. Add Backbone with a specific Grunt build task
+4. Add Angular with a specific Grunt build task
+5. Add Ember with a specific Grunt build task

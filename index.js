@@ -27,7 +27,6 @@ app.listen(app.get('port'), app.get('ipaddress'), function () {
 	})
 	.on('error', function (err) {
 		"use strict";
-		throw err;
 		console.log('ERROR! Shutting down server...');
-		this.close();
+		throw err;
 	});

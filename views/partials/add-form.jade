@@ -46,7 +46,7 @@ form#add-edit-cocktail.form-horizontal(method="POST")
 
   ol#step-list
     // Steps
-    if ! isEdit
+    if ! isEdit || !cocktail.steps || !cocktail.steps.length
       .form-group.cocktail-step
         label.col-sm-2.control-label
         .col-sm-1

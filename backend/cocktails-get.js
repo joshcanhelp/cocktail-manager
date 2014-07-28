@@ -253,7 +253,7 @@ module.exports.remove = function (req, res) {
 				}
 
 				// No cocktails? Remove the tag
-				if (!result.length) {
+				if (!result) {
 					Tag.remove({slug: item}, function (err, result) {
 						if (err) {
 							callback(err);

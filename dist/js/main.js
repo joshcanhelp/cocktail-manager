@@ -1,7 +1,7 @@
 /* globals alert */
 
 jQuery(document).ready(function ($) {
-	"use strict";
+	'use strict';
 
 	var hash = window.location.hash;
 	var addCocktailForm = $('#add-edit-cocktail');
@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
 			removeIt(el, index);
 			stepIt(el, index);
 		});
-		
+
 		function removeIt(el, index) {
 			var label = el.find('.col-sm-1');
 			if (index > 0 && !label.find('.glyphicon-remove').length) {

@@ -1,4 +1,5 @@
 /* globals require, module, console */
+'use strict';
 
 // Module includes
 var _ = require('underscore');
@@ -16,7 +17,6 @@ var User = require('./models/User');
  * @param res
  */
 module.exports.all = function (req, res) {
-	"use strict";
 
 	// Array for async functions
 	var asyncLoader = [];
@@ -86,7 +86,6 @@ module.exports.all = function (req, res) {
  * @param res
  */
 module.exports.view = function (req, res) {
-	"use strict";
 
 	Cocktail.findOne(
 		{_id: req.param('id')},
@@ -136,7 +135,6 @@ module.exports.view = function (req, res) {
  * @param res
  */
 module.exports.edit = function (req, res) {
-	"use strict";
 
 	// Array for async functions
 	var asyncLoader = [];
@@ -207,7 +205,6 @@ module.exports.edit = function (req, res) {
  * @param res
  */
 module.exports.remove = function (req, res) {
-	"use strict";
 
 	// Array for async functions
 	var asyncLoader = [];

@@ -1,4 +1,5 @@
 /* globals module, app, process, require, console */
+'use strict';
 
 var mongoose = require('mongoose');
 
@@ -15,7 +16,6 @@ if (process.env.OPENSHIFT_MONGODB_DB_URL) {
 
 // Connect when this file is required
 module.exports = mongoose.connect(dbUrl + dbName, function (err) {
-	"use strict";
 
 	if (err) {
 		console.log('ERROR connecting to: ' + dbUrl + dbName + '. ' + err);

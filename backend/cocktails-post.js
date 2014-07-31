@@ -1,4 +1,5 @@
 /* globals require, module, console */
+'use strict';
 
 // Module includes
 var _ = require('underscore');
@@ -9,7 +10,6 @@ var Tag = require('./models/Tag');
 var Cocktail = require('./models/Cocktail');
 
 module.exports.add = function (req, res) {
-	"use strict";
 
 	// Basic cocktail fields
 	var addCocktail = {
@@ -100,7 +100,6 @@ module.exports.add = function (req, res) {
 // Formats incoming ingredients for storage.
 // Deals with body-parser using both string and arrays for multiple values.
 function prepareIngredients(body) {
-	"use strict";
 
 	var ingredients = [];
 
@@ -128,7 +127,6 @@ function prepareIngredients(body) {
 
 // Create a slug from a name
 function createSlug(text) {
-	"use strict";
 
 	return text
 			.toLowerCase()

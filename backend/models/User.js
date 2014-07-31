@@ -1,4 +1,5 @@
 /* globals module, process, require, console */
+'use strict';
 
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
@@ -13,13 +14,11 @@ var UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.generateHash = function (password) {
-	"use strict";
 
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(6), null);
 };
 
 UserSchema.methods.validPassword = function (password) {
-	"use strict";
 
 	return bcrypt.compareSync(password, this.localAuth.password);
 };

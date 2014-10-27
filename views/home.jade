@@ -9,58 +9,29 @@ block content
       li
         a(href="#add") Add
       li
+        a(href="#tags") Tags
+      li
         a(href="/logout") Logout
     else
       li
         a(href="#login") Login
   .tab-content
+
     div#view-all.tab-pane
       .page-header
         h2 View all
-      if tags.length
-        .tag-listing
-          p
-            strong Tags:
-            for tag in tags
-              span.tag-name(data-tag-id="#{ tag._id }" data-tag-slug="#{ tag.slug }")= tag.name
-      if cocktails.length
-        table#cocktail-table.table.table-striped
-          thead
-            tr
-              th Name
-              th Description
-              th Ingredients
-              th Steps
-              if isAdmin
-                th Controls
-          tbody
-            for cocktail in cocktails
-              if !cocktail.tags
-                - cocktail.tags = []
-              tr(id="#{ cocktail._id }" data-tag-slugs="#{ cocktail.tags.join(' ') }")
-                td
-                  a(href="/view/#{ cocktail._id }")
-                    strong= cocktail.name.replace(" ", "\u00a0")
+      include partials/all-cocktails
 
-                td
-                  small
-                    em= cocktail.description
-                td=cocktail.ingredients ? cocktail.ingredients.length : '0'
-                td=cocktail.steps ? cocktail.steps.length : '0'
-                if isAdmin
-                  td
-                    a(href="/edit/#{ cocktail._id }")
-                      span.glyphicon.glyphicon-pencil
-                    a(href="/remove/#{ cocktail._id }")
-                      span.glyphicon.glyphicon-remove.remove-cocktail
-
-      else
-        p
-          em No cocktails to show ...
     div#add.tab-pane
       .page-header
         h2 Add one
       include partials/add-form
+
+    div#tags.tab-pane
+      .page-header
+        h2 Tags
+      include partials/tags-form
+
     div#login.tab-pane
       .page-header
         h2 Like a boss

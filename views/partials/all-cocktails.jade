@@ -1,0 +1,39 @@
+if tags.length
+  .tag-listing
+    p
+      strong Tags:
+        for tag in tags
+          span.tag-name(data-tag-id="#{ tag._id }" data-tag-slug="#{ tag.slug }")= tag.name
+
+if cocktails.length
+  table#cocktail-table.table.table-striped
+    thead
+      tr
+        th Name
+        th Description
+        th Ingredients
+        th Steps
+        if isAdmin
+          th Controls
+    tbody
+      for cocktail in cocktails
+        if !cocktail.tags
+          - cocktail.tags = []
+        tr(id="#{ cocktail._id }" data-tag-slugs="#{ cocktail.tags.join(' ') }")
+          td
+            a(href="/view/#{ cocktail._id }")
+              strong= cocktail.name
+          td
+            small
+              em= cocktail.description
+          td=cocktail.ingredients ? cocktail.ingredients.length : '0'
+          td=cocktail.steps ? cocktail.steps.length : '0'
+          if isAdmin
+            td
+              a(href="/edit/#{ cocktail._id }")
+                span.glyphicon.glyphicon-pencil
+              a(href="/remove/#{ cocktail._id }")
+                span.glyphicon.glyphicon-remove.remove-cocktail
+else
+  p
+    em No cocktails to show ...

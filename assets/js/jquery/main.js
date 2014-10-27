@@ -157,11 +157,12 @@ jQuery(document).ready(function ($) {
 	Edit controls
 	*/
 
-	$('.remove-cocktail').click(function (e) {
-		if (! window.confirm('Are you sure you want to delete this cocktail? This cannot be undone.')) {
+	$('.remove-cocktail, .remove-tag').click(function (e) {
+		if (! window.confirm('Are you sure you want to delete this? This action cannot be undone.')) {
 			e.preventDefault();
 		}
 	});
+
 
 	/*
 	Auth/login

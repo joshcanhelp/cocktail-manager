@@ -47,12 +47,35 @@ module.exports.all = function (req, res) {
 		// Get all tags sorted alpha by slug
 		Tag.find({}, {},
 			{ sort: {	slug: 1	}	},
-			function (err, result) {
+			function (err, allTags) {
 				if (err) {
 					callback(err);
 				}
-				pageVars.tags = result;
-				callback(null);
+
+				pageVars.tags = allTags;
+
+				// For each cocktail, run the function to remove the tag
+				var index = 0;
+				async.eachSeries(pageVars.tags, function (tag, callback) {
+
+					//console.log(cocktail.tags.indexOf(tag.slug));
+					Cocktail.find({tags: tag.slug}, function (err, tagged) {
+						if (err) {
+							index++;
+							callback(err);
+						}
+						pageVars.tags[index].cocktailCount = tagged.length;
+						index++;
+						callback();
+					});
+
+				}, function (err) {
+					if (err) {
+						callback(err);
+					}
+
+					callback();
+				});
 			}
 		);
 	});

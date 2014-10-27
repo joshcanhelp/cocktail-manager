@@ -1,0 +1,19 @@
+if tags.length
+  table#tags-table.table.table-striped
+      thead
+        tr
+          th Name
+          th Slug
+          th # cocktails
+          if isAdmin
+            th Controls
+      tbody
+        for tag in tags
+          tr(id="#{ tag._id }")
+            td= tag.name
+            td= tag.slug
+            td= tag.cocktailCount ? tag.cocktailCount : 0
+            if isAdmin
+              td
+                a(href="/remove-tag/#{ tag._id }")
+                  span.glyphicon.glyphicon-remove.remove-tag

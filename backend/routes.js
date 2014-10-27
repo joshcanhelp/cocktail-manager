@@ -1,6 +1,7 @@
 /* globals module, app, process, require, console, express */
 
 var cocktailsGet = require('./cocktails-get');
+var tagsGet = require('./tags-get');
 var cocktailsPost = require('./cocktails-post');
 
 module.exports = function (app, passport) {
@@ -39,6 +40,9 @@ module.exports = function (app, passport) {
 
 	// Remove cocktail
 	app.get('/remove/:id', isAdmin, cocktailsGet.remove);
+
+	// Remove tag
+	app.get('/remove-tag/:id', isAdmin, tagsGet.remove);
 
 };
 

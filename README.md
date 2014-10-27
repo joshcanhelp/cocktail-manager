@@ -18,7 +18,7 @@ Built with:
 
 ## Concept
 
-I finished an in-depth full-stack JS class in June but never had the chance to build something completely on my own. At the same time, my cocktail recipe collection was getting a little out-of-hand and was stored on [*gasp*] paper.
+I finished an in-depth full-stack JS class in June 2014 but never had the chance to build something completely on my own. At the same time, my cocktail recipe collection was getting a little out-of-hand and was stored on [*gasp*] paper.
 
 This is my attempt to use what I learned to solve a very unimportant problem I was having with the JS tools I learned. Once this is is feature complete, I want to try out the major MVC frameworks to see what can be gained (or lost). Already the mish-mash of jQuery "partials" is a little unweildy so I'm guessing I can improve the maintainability a bit
 

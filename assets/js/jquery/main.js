@@ -139,7 +139,13 @@ jQuery(document).ready(function ($) {
 		} else {
 			// Hide all rows then show filtered ones
 			cocktailTable.find('tbody tr').hide();
-			cocktailTable.find('tr[data-tag-slugs*=' + tagSlug + ']').show();
+			cocktailTable.find('tr').filter(function () {
+				if ($(this).data('tag-slugs')) {
+					return $(this).data('tag-slugs').split(' ').indexOf(tagSlug) >= 0;
+				} else {
+					return false;
+				}
+			}).show();
 
 			// Assign active class to the active filter
 			tagFilter.removeClass('active');

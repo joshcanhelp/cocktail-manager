@@ -87,5 +87,5 @@ form#add-edit-cocktail.form-horizontal(method="POST")
           span &nbsp;&nbsp;
 
           if cocktail.tags
-            input(type="hidden" value="#{ cocktail.tags.join(',') }")
+            input(type="hidden" name="cocktailTagsOld" value="#{ cocktail.tagNames.join(',') }")
         input.btn.btn-primary(type="submit", value="Save Cocktail")

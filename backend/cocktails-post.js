@@ -24,48 +24,52 @@ module.exports.add = function (req, res) {
 	// Array for async functions
 	var asyncLoader = [];
 
-	// Parse incoming tags
 	var newTags = req.body.cocktailTags.split(',');
-	var oldTags = req.body.cocktailTags.split(',');
+
+
+	// Parse incoming new tags
 	_.each(newTags, function (el, index, list) {
 
 		// Make sure we have a string, trim whitespace, and prepare
 		var tagName = el.toString().trim();
 		var tagSlug = createSlug(tagName);
 
+		// Do we need to remove this tag?
+
+		// Add the tag, if required
 		asyncLoader.push( function (callback) {
 
 			// Make sure we have something to store
-			if (tagSlug) {
-
-				// If that tag exists already, no need to add
-				Tag.findOne({slug: tagSlug}, function (err, tag) {
-					if (err) {
-						callback(err);
-					}
-
-					// Associate the tag with the cocktail and continue
-					if (tag) {
-						addCocktail.tags.push(tagSlug);
-						callback(null);
-
-					// Otherwise, create the tag
-					} else {
-						Tag.create({
-							name: tagName,
-							slug: tagSlug
-						}, function (err, tag) {
-							if (err) {
-								callback(err);
-							}
-							addCocktail.tags.push(tagSlug);
-							callback(null);
-						});
-					}
-				});
-			} else {
+			if (! tagSlug) {
 				callback(null);
 			}
+
+			// If that tag exists already, no need to add
+			Tag.findOne({slug: tagSlug}, function (err, tag) {
+				if (err) {
+					callback(err);
+				}
+
+				// Associate the tag with the cocktail
+				addCocktail.tags.push(tagSlug);
+
+				// If the tag exists, continue async process
+				if (tag) {
+					callback(null);
+
+				// Otherwise, create the tag
+				} else {
+					Tag.create({
+						name: tagName,
+						slug: tagSlug
+					}, function (err, tag) {
+						if (err) {
+							callback(err);
+						}
+						callback(null);
+					});
+				}
+			});
 		});
 	});
 
@@ -89,6 +93,43 @@ module.exports.add = function (req, res) {
 				}
 				addCocktail.id = result._id;
 				callback(null);
+			});
+		}
+	});
+
+	// Need to compare old to new to see if tags need to be removed from the DB
+	var oldTags = req.body.cocktailTagsOld.split(',');
+
+	_.each(oldTags, function (el, index, list) {
+
+		var tagName = el.toString().trim();
+
+		// Look for the old tag in the new tag array
+		if (newTags.indexOf(tagName) < 0) {
+
+			asyncLoader.push(function (callback) {
+
+				Cocktail.findOne({tags: createSlug(tagName)}, function (err, cocktail) {
+					if (err) {
+						callback(err);
+					}
+
+					// If there is a cocktail, skip deletion
+					if (cocktail) {
+						callback(null);
+
+						// Otherwise, delete the tag
+					} else {
+						Tag.remove({
+							name: tagName
+						}, function (err) {
+							if (err) {
+								callback(err);
+							}
+							callback(null);
+						});
+					}
+				});
 			});
 		}
 	});

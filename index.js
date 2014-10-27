@@ -11,11 +11,11 @@ var app = express();
 // Configure Passport
 require('./config/passport')(passport);
 
-// Configure Express
-require('./config/config')(app, express, passport);
-
 // Mongoose and MongoDB
-require('./config/db');
+var dbConnection = require('./config/db');
+
+// Configure Express
+require('./config/config')(app, express, passport, dbConnection);
 
 // All URL routes
 require('./backend/routes')(app, passport);

@@ -24,8 +24,10 @@ module.exports.add = function (req, res) {
 	// Array for async functions
 	var asyncLoader = [];
 
-	// Pull apart the incoming tags list
-	_.each(req.body.cocktailTags.split(','), function (el, index, list) {
+	// Parse incoming tags
+	var newTags = req.body.cocktailTags.split(',');
+	var oldTags = req.body.cocktailTags.split(',');
+	_.each(newTags, function (el, index, list) {
 
 		// Make sure we have a string, trim whitespace, and prepare
 		var tagName = el.toString().trim();

@@ -13,7 +13,7 @@ Built with:
 - Underscore.js
 - Async.js
 
-**[View the live demo here »](http://cocktails-joshcanhelp.rhcloud.com/)**
+**[View the live demo here »](http://cocktails.joshcanhelp.com/)** (finally up!!)
 
 
 ## Concept
